@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 """
 URL configuration for pharmaciesEnligne project.
 
@@ -27,4 +29,6 @@ urlpatterns = [
     path("Pharmacies/", include("pharmacies.urls")),
     #path('', include(router.urls))
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+

@@ -1,15 +1,17 @@
 from django.urls import path ,include
 from rest_framework import routers
-from .views import MedicamentViewSet, CategorieViewSet, ClientViewSet, CommandeViewSet, PharmacienViewSet, PharmacieViewSet 
-
+from .views import MedicamentViewSet, CategorieViewSet, ClientViewSet, CommandeViewSet, PharmacienViewSet, PharmacieViewSet ,MedicamentPharmacieViewSet, MedicamentPharmaciePharmacienViewSet,PharmacieMedicamentsViewSet
 
 router=routers.DefaultRouter()
-router.register('Medicament', MedicamentViewSet)
-router.register('Client', ClientViewSet)
-router.register('Pharmacie', PharmacieViewSet)
-router.register('Pharmacien', PharmacienViewSet)
-router.register('Catagorie', CategorieViewSet)
-router.register('Commande', CommandeViewSet)
+router.register(r'Medicament', MedicamentViewSet)
+router.register(r'Client', ClientViewSet)
+router.register(r'Pharmacie', PharmacieViewSet)
+router.register(r'Pharmacien', PharmacienViewSet, basename='pharmaciens')
+router.register(r'Catagorie', CategorieViewSet)
+router.register(r'Commande', CommandeViewSet)
+router.register(r'medicaments-by-pharmacie', MedicamentPharmacieViewSet, basename='medicaments-by-pharmacie')
+router.register(r'medicaments', MedicamentPharmaciePharmacienViewSet, basename='medicaments')
+router.register(r'(?P<pharmacien_id>\d+)/medicaments', PharmacieMedicamentsViewSet, basename='pharmacie_medicaments')
 
 urlpatterns = [
     #path('Medicament/', MedicamentViewSet, name='Medicament-liste'),
@@ -18,5 +20,7 @@ urlpatterns = [
     #path('Commande/', CommandeListeView.as_view(), name='Commande-liste'),
     #path('Pharmacien/', PharmacienListeView.as_view(), name='Pharmacien-liste'),
     #path('Pharmacie/', PharmacieListeView.as_view(), name='Pharmacie-liste'),
-     path('', include(router.urls))
+     path('', include(router.urls)),
+     
+     
 ]
